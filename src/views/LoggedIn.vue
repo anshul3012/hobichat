@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import img from '@/assets/logo.jpg'
+import img from '@/assets/Logo.jpg'
 import { computed, onMounted, ref } from 'vue'
 import { store } from '@/stores/store'
 import { API } from '@/fake/apis'

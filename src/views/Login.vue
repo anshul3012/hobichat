@@ -2,7 +2,7 @@
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { API } from '@/fake/apis'
-import img from '@/assets/logo.jpg'
+import img from '@/assets/Logo.jpg'
 import { store } from '@/stores/store'
 const myStore = store()
 const useApi = API()
