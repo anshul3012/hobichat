@@ -1,0 +1,23 @@
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+.custom-text-1 {
+  color: #393640;
+}
+
+.custom-text-2 {
+  color: #9C9B9F;
+}
+
+.custom-backgroud-1 {
+  background-color: #FFFFFF;
+}
+
+.custom-backgroud-2 {
+  background-color: #ECEEF3;
+}
+
+.custom-backgroud-text-2 {
+  background-color: #9C9B9F;
+}
