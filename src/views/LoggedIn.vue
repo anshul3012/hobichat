@@ -30,7 +30,6 @@ const filteredChats = computed(() => {
   if (!searchKey.value) return groups.value
   return groups.value.filter(group => {
     if (group.name.toLowerCase().includes(searchKey.value.toLowerCase())) return true
-    if (group.createdDate.toLowerCase().includes(searchKey.value.toLowerCase())) return true
     return false
   })
 })
