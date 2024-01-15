@@ -23,6 +23,7 @@ const chatDeatils = computed(() => {
 })
 
 const sendChat = () => {
+  if (!myChat.value) return
   useApi.sentChat(myStore.userEmail, chatId.value, myChat.value)
   myChat.value = ''
 }
@@ -46,7 +47,7 @@ const sendChat = () => {
       </div>
       <div class="flex-none flex justify-between items-center gap-x-3">
         <v-icon class="rotate-45 -translate-y-3" icon="fa-paperclip fa-2x" />
-        <v-text-field v-model="myChat" variant="solo" @keydown.enter="sendChat" />
+        <v-text-field v-model.trim="myChat" variant="solo" @keydown.enter="sendChat" />
         <v-btn class="-translate-y-3" color="primary" :disabled="!myChat"
           icon="fa-paper-plane fa-lg" elevation="0"  @click="sendChat" />
       </div>
@@ -58,3 +59,9 @@ const sendChat = () => {
     </div>
   </div>
 </template>
+
+<style scoped>
+.h-inherit {
+  height: inherit;
+}
+</style>

@@ -64,7 +64,7 @@ const attemptLogin = async () => {
             <div class="grid gap-8">
               <p class="font-semibold text-xl">Log in</p>
               <v-text-field
-                v-model="email"
+                v-model.trim="email"
                 :rules="emailRule"
                 variant="outlined"
                 label="Email"
@@ -74,6 +74,7 @@ const attemptLogin = async () => {
                 class="w-full"
                 text="Log in"
                 color="primary"
+                :disabled="!email"
                 @click="attemptLogin" />
               <hr />
             </div>

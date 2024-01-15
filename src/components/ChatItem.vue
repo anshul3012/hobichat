@@ -16,6 +16,7 @@ const props = defineProps({
 
 <template>
   <v-list-item
+    :value="props.name"
     link>
     <div class="flex justify-between items-center">
       <div class="flex items-center gap-2">

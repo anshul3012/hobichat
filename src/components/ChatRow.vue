@@ -30,7 +30,7 @@ const millisecondsToTimeString = (milliseconds: number) => {
   <div class="flex items-start gap-x-2" :class="isMyChat ? 'flex-row-reverse pr-2' : ''">
     <Avtar :email="props.chat.user" :size="'small'" />
     <div class="custom-backgroud-1 py-1 px-4 rounded-full myWidth flex justify-between gap-4">
-      <p class="text-wrap min-h-7">{{ props.chat.text }}</p>
+      <p class="text-wrap overflow-auto min-h-7">{{ props.chat.text }}</p>
       <div class="flex items-end">
         <p class="text-nowrap text-xs custom-text-2">{{ millisecondsToTimeString(props.chat.milliseconds) }}</p>
       </div>

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import img from '@/assets/Logo.jpg'
-import { computed, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { store } from '@/stores/store'
 import { API } from '@/fake/apis'
 import { useRouter } from 'vue-router'
@@ -16,10 +16,25 @@ const dialog = ref(false)
 const searchKey = ref('')
 const newChat = ref('')
 const chatNameErros = ref<string | string[]>([])
+const drawerWidth = ref(400)
 
 onMounted(() => {
   groups.value = useApi.getChatGroups()
+  window.addEventListener('resize', handleResize)
 })
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize)
+})
+
+const handleResize = () => {
+  if (window.innerWidth < 800 && window.innerWidth > 600) {
+    drawerWidth.value = 300
+  } else if (window.innerWidth < 600) {
+    drawerWidth.value = 200
+  } else {
+    drawerWidth.value = 400
+  }
+}
 
 const logout = () => {
   myStore.onLogout()
@@ -100,29 +115,31 @@ const eraseAll = () => {
         <v-spacer />
         <Avtar class="mr-6" :email="myStore.userEmail" size="big" @click="logout" />
       </v-app-bar>
-      <v-navigation-drawer width="400">
-        <v-list-item>
-          <div class="flex justify-between py-4">
-            <p class="font-bold text-2xl">Chats</p>
-            <v-btn
-              size="compact"
-              color="primary"
-              text="+"
-              elevation="0"
-              class="h-10 w-10"
-              @click="dialog = true" />
+      <v-navigation-drawer permanent :width="drawerWidth">
+        <v-list>
+          <v-list-item>
+            <div class="flex justify-between py-4">
+              <p class="font-bold text-2xl">Chats</p>
+              <v-btn
+                size="compact"
+                color="primary"
+                text="+"
+                elevation="0"
+                class="h-10 w-10"
+                @click="dialog = true" />
+            </div>
+          </v-list-item>
+          <v-divider />
+          <div class="grid gap-2">
+            <ChatItem
+              v-for="(group, idx) in filteredChats"
+              class="py-2"
+              :key="idx"
+              :name="group.name"
+              :createdDate="group.createdDate"
+              @click="myStore.updateChatId(group.id)" />
           </div>
-        </v-list-item>
-        <v-divider />
-        <div class="grid gap-2">
-          <ChatItem
-            v-for="(group, idx) in filteredChats"
-            class="py-2"
-            :key="idx"
-            :name="group.name"
-            :createdDate="group.createdDate"
-            @click="myStore.updateChatId(group.id)" />
-        </div>
+        </v-list>
       </v-navigation-drawer>
       <v-main>
         <ChatArena />
@@ -154,10 +171,11 @@ const eraseAll = () => {
             <div class="space-y-2">
               <p class="text-center text-sm font-semibold">Name</p>
               <v-text-field
-                v-model="newChat"
+                v-model.trim="newChat"
                 :rules="newChatRules"
                 :error-messages="chatNameErros"
                 variant="outlined"
+                @keydown.enter="createNewChat"
                 placeholder="# e.g. Writing" />
             </div>
           </div>
@@ -168,6 +186,7 @@ const eraseAll = () => {
             class="w-full"
             text="Create"
             color="primary"
+            :disabled="!newChat"
             @click="createNewChat" />
         </v-card-actions>
       </v-card>
